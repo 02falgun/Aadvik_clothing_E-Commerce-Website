@@ -17,6 +17,8 @@ import {
   Search,
   Filter
 } from 'lucide-react';
+import ProductForm from '@/components/admin/ProductForm';
+import Image from 'next/image';
 
 interface DashboardStats {
   totalProducts: number;
@@ -35,6 +37,8 @@ export default function AdminDashboard() {
   const [productsLoading, setProductsLoading] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
+  const [isProductFormOpen, setIsProductFormOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -92,6 +96,33 @@ export default function AdminDashboard() {
       console.error('Error fetching orders:', error);
     } finally {
       setOrdersLoading(false);
+    }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setIsProductFormOpen(true);
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        const response = await fetch(`/api/products/${productId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        const data = await response.json();
+        if (data.success) {
+          setProducts(products.filter((p) => p._id !== productId));
+        } else {
+          alert('Failed to delete product.');
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('An error occurred while deleting the product.');
+      }
     }
   };
 
@@ -314,7 +345,13 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-slate-900">Products</h2>
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 flex items-center space-x-2">
+              <button 
+                onClick={() => {
+                  setEditingProduct(null);
+                  setIsProductFormOpen(true);
+                }}
+                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 flex items-center space-x-2"
+              >
                 <Plus className="h-4 w-4" />
                 <span>Add Product</span>
               </button>
@@ -376,7 +413,7 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="flex-shrink-0 h-10 w-10">
-                                <img className="h-10 w-10 rounded-md object-cover" src={product.images[0]} alt={product.name} />
+                                <Image className="h-10 w-10 rounded-md object-cover" src={product.images[0]} alt={product.name} width={40} height={40} />
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-slate-900">{product.name}</div>
@@ -401,10 +438,10 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div className="flex items-center space-x-3">
-                              <button className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => handleEditProduct(product)} className="text-indigo-600 hover:text-indigo-900">
                                 <Edit className="h-4 w-4" />
                               </button>
-                              <button className="text-red-600 hover:text-red-900">
+                              <button onClick={() => handleDeleteProduct(product._id)} className="text-red-600 hover:text-red-900">
                                 <Trash2 className="h-4 w-4" />
                               </button>
                             </div>
@@ -619,6 +656,25 @@ export default function AdminDashboard() {
           </div>
         )}
       </div>
+      {isProductFormOpen && (
+        <ProductForm
+          product={editingProduct}
+          onClose={() => {
+            setIsProductFormOpen(false);
+            setEditingProduct(null);
+          }}
+          onProductAdded={(newProduct: Product) => {
+            setProducts([newProduct, ...products]);
+            setIsProductFormOpen(false);
+            setEditingProduct(null);
+          }}
+          onProductUpdated={(updatedProduct: Product) => {
+            setProducts(products.map(p => p._id === updatedProduct._id ? updatedProduct : p));
+            setIsProductFormOpen(false);
+            setEditingProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }

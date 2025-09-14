@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 
+import { getTokenFromRequest, verifyToken } from '@/lib/auth';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -39,12 +41,18 @@ export async function PUT(
   try {
     await connectDB();
 
+    const token = getTokenFromRequest(request);
+    if (!token) {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+    const decoded = verifyToken(token);
+    if (!decoded || decoded.role !== 'admin') {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await params;
     const body = await request.json();
     
-    // TODO: Add admin authentication check
-    // TODO: Add product validation schema
-
     const product = await Product.findByIdAndUpdate(
       id,
       body,
@@ -79,8 +87,16 @@ export async function DELETE(
   try {
     await connectDB();
 
+    const token = getTokenFromRequest(request);
+    if (!token) {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+    const decoded = verifyToken(token);
+    if (!decoded || decoded.role !== 'admin') {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await params;
-    // TODO: Add admin authentication check
 
     const product = await Product.findByIdAndDelete(id);
 

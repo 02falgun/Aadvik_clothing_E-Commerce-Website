@@ -174,9 +174,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-32 h-32 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl font-bold text-indigo-600">AK</span>
+                <span className="text-4xl font-bold text-indigo-600">AG</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">Aadvik Kumar</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">Aman Gupta</h3>
               <p className="text-indigo-600 font-medium mb-2">Founder & CEO</p>
               <p className="text-slate-600">
                 Visionary leader with 10+ years in fashion retail, passionate about creating inclusive and sustainable fashion.
@@ -185,9 +185,9 @@ export default function AboutPage() {
             
             <div className="text-center">
               <div className="w-32 h-32 bg-gradient-to-br from-pink-200 to-rose-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl font-bold text-pink-600">SK</span>
+                <span className="text-4xl font-bold text-pink-600">KKT</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">Sarah Kim</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">Kavya Kumar Thakur</h3>
               <p className="text-indigo-600 font-medium mb-2">Head of Design</p>
               <p className="text-slate-600">
                 Creative director with an eye for trends and a commitment to timeless, versatile designs.

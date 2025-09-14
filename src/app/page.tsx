@@ -107,13 +107,18 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-gray-900 to-gray-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <section 
+        className="relative text-white bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/BG.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Discover Your Style
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-300">
+            <p className="text-xl md:text-2xl mb-8 text-gray-200">
               Premium clothing that reflects your personality
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -172,44 +177,48 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section 
+        className="relative py-16 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/shop-by-category-bg.webp')" }}
+      >
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Shop by Category
             </h2>
-            <p className="text-xl text-slate-600">
+            <p className="text-xl text-slate-700">
               Find exactly what you&apos;re looking for
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             <Link href="/products?category=mens-clothing" className="group text-center">
-              <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg p-8 mb-4 group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-8 mb-4 group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:bg-white">
                 <div className="text-4xl font-bold text-slate-700 mb-2">M</div>
                 <h3 className="font-semibold text-slate-900">Men&apos;s</h3>
               </div>
             </Link>
             <Link href="/products?category=womens-clothing" className="group text-center">
-              <div className="bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg p-8 mb-4 group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-8 mb-4 group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:bg-white">
                 <div className="text-4xl font-bold text-indigo-600 mb-2">W</div>
                 <h3 className="font-semibold text-slate-900">Women&apos;s</h3>
               </div>
             </Link>
             <Link href="/products?category=kids-clothing" className="group text-center">
-              <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-lg p-8 mb-4 group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-8 mb-4 group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:bg-white">
                 <div className="text-4xl font-bold text-emerald-600 mb-2">K</div>
                 <h3 className="font-semibold text-slate-900">Kids</h3>
               </div>
             </Link>
             <Link href="/products?category=accessories" className="group text-center">
-              <div className="bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg p-8 mb-4 group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-8 mb-4 group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:bg-white">
                 <div className="text-4xl font-bold text-amber-600 mb-2">A</div>
                 <h3 className="font-semibold text-slate-900">Accessories</h3>
               </div>
             </Link>
             <Link href="/products?category=shoes" className="group text-center">
-              <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg p-8 mb-4 group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                <div className="text-4xl font-bold text-slate-700 mb-2">S</div>
+              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-8 mb-4 group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:bg-white">
+                <div className="text-4xl font-bold text-rose-600 mb-2">S</div>
                 <h3 className="font-semibold text-slate-900">Shoes</h3>
               </div>
             </Link>
@@ -217,7 +226,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link
               href="/categories"
-              className="inline-flex items-center border-2 border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-colors"
+              className="inline-flex items-center border-2 border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-colors bg-white/50"
             >
               View All Categories
               <ArrowRight className="ml-2 h-5 w-5" />

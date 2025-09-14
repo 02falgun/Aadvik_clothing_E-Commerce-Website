@@ -29,7 +29,7 @@ function Products() {
     search: '',
   });
   const [showFilters, setShowFilters] = useState(false);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<{ name: string, slug: string }[]>([]);
   const searchParams = useSearchParams();
 
   const fetchProducts = useCallback(async () => {
@@ -77,8 +77,11 @@ function Products() {
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, [filters, fetchProducts]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const fetchCategories = async () => {
     try {
@@ -86,7 +89,7 @@ function Products() {
       const data = await response.json();
       
       if (data.success) {
-  setCategories(data.data.map((cat: { name: string }) => cat.name));
+        setCategories(data.data.map((cat: { name: string, slug: string }) => ({ name: cat.name, slug: cat.slug })));
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -117,7 +120,7 @@ function Products() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">All Products</h1>
+          <h1 className="text-3xl font-bold text-slate-900">{filters.category ? categories.find(c => c.slug === filters.category)?.name : 'All Products'}</h1>
           <p className="mt-2 text-slate-600">
             Discover our complete collection of premium clothing
           </p>
@@ -167,8 +170,8 @@ function Products() {
                   >
                     <option value="">All Categories</option>
                     {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
+                      <option key={category.slug} value={category.slug}>
+                        {category.name}
                       </option>
                     ))}
                   </select>

@@ -19,16 +19,20 @@ export default function ProductCard({ product }: ProductCardProps) {
       addToCart(product, 'One Size', 'Default', 1);
     }
   };
+
+  const imageUrl = product.images && product.images.length > 0 ? product.images[0] : '/placeholder-product.svg';
+  const isValidUrl = imageUrl.startsWith('http') || imageUrl.startsWith('/');
+
   return (
     <div className="group relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {/* Product Image */}
       <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         {product.images && product.images.length > 0 ? (
           <Image
-            src={product.images[0]}
+            src={isValidUrl ? imageUrl : '/placeholder-product.svg'}
             alt={product.name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

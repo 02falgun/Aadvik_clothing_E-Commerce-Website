@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+91 9301806869</p>
                   <p className="text-sm text-gray-500">Mon-Fri 9AM-6PM EST</p>
                 </div>
               </div>
@@ -133,9 +133,9 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Address</h3>
                   <p className="text-gray-600">
-                    123 Fashion Street<br />
-                    New York, NY 10001<br />
-                    United States
+                    GTB Nagar<br />
+                    New delhi<br />
+                    India
                   </p>
                 </div>
               </div>
