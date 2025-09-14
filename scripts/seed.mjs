@@ -14,7 +14,8 @@ const { default: Category } = await import('../src/models/Category.js');
 // Database connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/aadvik-clothing');
+    await mongoose.connect("mongodb+srv://kavtech2025_db_user:RGy0LOPBBJ9zXP9v@kavtech-1.ur2hnsg.mongodb.net/?retryWrites=true&w=majority&appName=KavTech-1");
+    console.log("hi")
     console.log('✅ Connected to MongoDB');
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);

@@ -142,7 +142,7 @@ export const POST = requireAuth(async (request: NextRequest) => {
   }
 });
 
-export async function GET(request: NextRequest) {
+export const GET = requireAuth(async (request: NextRequest) => {
   try {
     await connectDB();
 
@@ -153,38 +153,38 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
 
   const query: Record<string, unknown> = {};
-    if (userId) query.user = userId;
-    if (status) query.status = status;
+  if (userId) query.user = userId;
+  if (status) query.status = status;
 
-    const skip = (page - 1) * limit;
+  const skip = (page - 1) * limit;
 
-    const orders = await Order.find(query)
-      .populate('user', 'firstName lastName email')
-      .populate('items.product', 'name price images')
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+  const orders = await Order.find(query)
+    .populate('user', 'firstName lastName email')
+    .populate('items.product', 'name price images')
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .lean();
 
-    const total = await Order.countDocuments(query);
+  const total = await Order.countDocuments(query);
 
-    return NextResponse.json({
-      success: true,
-      data: {
-        orders,
-        pagination: {
-          page,
-          limit,
-          total,
-          pages: Math.ceil(total / limit),
-        },
+  return NextResponse.json({
+    success: true,
+    data: {
+      orders,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
       },
-    });
-  } catch (error) {
-    console.error('Get orders error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+    },
+  });
+} catch (error) {
+  console.error('Get orders error:', error);
+  return NextResponse.json(
+    { success: false, message: 'Internal server error' },
+    { status: 500 }
+  );
 }
+});
